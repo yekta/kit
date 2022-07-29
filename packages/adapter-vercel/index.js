@@ -82,7 +82,7 @@ const redirects = {
 };
 
 /** @type {import('.').default} **/
-export default function ({ external = [], edge, split } = {}) {
+export default function ({ external = [], edge, split, esbuildOptions } = {}) {
 	return {
 		name: '@sveltejs/adapter-vercel',
 
@@ -189,7 +189,8 @@ export default function ({ external = [], edge, split } = {}) {
 					platform: 'node',
 					format: 'esm',
 					external,
-					sourcemap: 'linked'
+					sourcemap: 'linked',
+					define: esbuildOptions ? esbuildOptions.define : undefined
 				});
 
 				write(
