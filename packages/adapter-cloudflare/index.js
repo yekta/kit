@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import * as esbuild from 'esbuild';
 
 /** @type {import('.').default} */
-export default function (define = undefined) {
+export default function (options) {
 	// TODO remove for 1.0
 	/* if (arguments.length > 0) {
 		throw new Error(
@@ -51,7 +51,7 @@ export default function (define = undefined) {
 				allowOverwrite: true,
 				format: 'esm',
 				bundle: true,
-				define: define
+				define: options.define
 			});
 		}
 	};
