@@ -35,7 +35,7 @@ const edge_set_in_env_var =
 	process.env.NETLIFY_SVELTEKIT_USE_EDGE === '1';
 
 /** @type {import('.').default} */
-export default function ({ split = false, edge = edge_set_in_env_var, options } = {}) {
+export default function ({ split = false, edge = edge_set_in_env_var, esbuildOptions } = {}) {
 	return {
 		name: '@sveltejs/adapter-netlify',
 
@@ -75,7 +75,7 @@ export default function ({ split = false, edge = edge_set_in_env_var, options } 
 					throw new Error('Cannot use `split: true` alongside `edge: true`');
 				}
 				// @ts-ignore
-				await generate_edge_functions({ builder, options });
+				await generate_edge_functions({ builder, esbuildOptions });
 			} else {
 				await generate_lambda_functions({ builder, esm, split, publish });
 			}
@@ -87,7 +87,7 @@ export default function ({ split = false, edge = edge_set_in_env_var, options } 
  * @param {import('@sveltejs/kit').Builder} params.builder
  */
 // @ts-ignore
-async function generate_edge_functions({ builder, options }) {
+async function generate_edge_functions({ builder, esbuildOptions }) {
 	const tmp = builder.getBuildDirectory('netlify-tmp');
 	builder.rimraf(tmp);
 	builder.mkdirp(tmp);
@@ -140,7 +140,7 @@ async function generate_edge_functions({ builder, options }) {
 		platform: 'browser',
 		sourcemap: 'linked',
 		target: 'es2020',
-		define: options ? options.define : undefined
+		define: esbuildOptions ? esbuildOptions.define : undefined
 	});
 
 	writeFileSync('.netlify/edge-functions/manifest.json', JSON.stringify(edge_manifest));

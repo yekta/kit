@@ -4,5 +4,7 @@ import './ambient.js';
 export default function plugin(options: TOptions): Adapter;
 
 type TOptions= {
-  define?: { [key: string]: string };
+  esbuildOptions: {
+    define?: { [key: string]: string };
+  }
 }
