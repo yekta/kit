@@ -4,13 +4,13 @@ import { fileURLToPath } from 'url';
 import * as esbuild from 'esbuild';
 
 /** @type {import('.').default} */
-export default function () {
+export default function (define = undefined) {
 	// TODO remove for 1.0
-	if (arguments.length > 0) {
+	/* if (arguments.length > 0) {
 		throw new Error(
 			'esbuild options can no longer be passed to adapter-cloudflare — see https://github.com/sveltejs/kit/pull/4639'
 		);
-	}
+	} */
 
 	return {
 		name: '@sveltejs/adapter-cloudflare',
@@ -50,7 +50,8 @@ export default function () {
 				outfile: `${dest}/_worker.js`,
 				allowOverwrite: true,
 				format: 'esm',
-				bundle: true
+				bundle: true,
+				define: define
 			});
 		}
 	};
