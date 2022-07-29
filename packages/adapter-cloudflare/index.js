@@ -51,7 +51,7 @@ export default function (options) {
 				allowOverwrite: true,
 				format: 'esm',
 				bundle: true,
-				define: options.define
+				define: options ? options.define : undefined
 			});
 		}
 	};
